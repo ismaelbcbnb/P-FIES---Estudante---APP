@@ -89,13 +89,13 @@ BEGIN
     BEGIN
         BLOCK "040904e4"
         BEGIN
-            VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "pfies_estudante" "\0"
+            VALUE "CompanyName", "br.gov.bnb" "\0"
+            VALUE "FileDescription", "P-FIES - Estudante" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "pfies_estudante" "\0"
+            VALUE "InternalName", "P-FIES - Estudante" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2025 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "pfies_estudante.exe" "\0"
-            VALUE "ProductName", "pfies_estudante" "\0"
+            VALUE "OriginalFilename", "P-FIES - Estudante.exe" "\0"
+            VALUE "ProductName", "P-FIES - Estudante" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
