@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../screens/password_recovery_screen.dart';
 import '../utils/cpf_formatter.dart';
+import 'contagem_form.dart';
 import 'custom_red_button.dart';
 
 class LoginForm extends StatefulWidget {
@@ -74,7 +75,10 @@ class _LoginFormState extends State<LoginForm> {
               CustomRedButton(
                 text: "Acessar financiamento",
                 onPressed: () {
-                  print("Login com CPF: ${cpfController.text}");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => ContagemForm()),
+                  );
                 },
               ),
             ],

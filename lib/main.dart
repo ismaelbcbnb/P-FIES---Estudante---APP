@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
 import 'screens/login_register_screen.dart';
+import 'dart:io';
 
 void main() {
+  HttpOverrides.global = MyHttpOverrides();
   runApp(MyApp());
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (cert, host, port) => true;
+  }
 }
 
 class MyApp extends StatelessWidget {
