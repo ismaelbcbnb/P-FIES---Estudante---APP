@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+
 import '../screens/password_recovery_screen.dart';
 import '../utils/cpf_formatter.dart';
-import 'contagem_form.dart';
+import '../screens/home.dart';
 import 'custom_red_button.dart';
 
 class LoginForm extends StatefulWidget {
@@ -13,6 +16,53 @@ class _LoginFormState extends State<LoginForm> {
   final cpfController = TextEditingController();
   final senhaController = TextEditingController();
   bool senhaVisivel = false;
+  bool isLoading = false;
+
+  bool isCpfValid(String cpf) {
+    // Aqui você pode usar sua lógica de validação de CPF
+    return cpf.length == 14; // Exemplo com máscara
+  }
+
+  Future<void> autenticarUsuario() async {
+    final cpf = cpfController.text.replaceAll(RegExp(r'[^0-9]'), '');
+    final senha = senhaController.text;
+
+    if (!isCpfValid(cpfController.text) || senha.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Preencha CPF e senha válidos.')),
+      );
+      return;
+    }
+
+    setState(() => isLoading = true);
+
+    final url = Uri.parse('https://s1iisp45.dmz.bnb/BN.S627.FIES.Web.Cliente.API/api/acesso');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        "CPF": cpf,
+        "CodAcesso": senha,
+        "TipoPessoa": "A",
+      }),
+    );
+
+    setState(() => isLoading = false);
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+      final pessoaId = data['PessoaId'];
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home(pessoaId: pessoaId)),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('CPF ou senha inválidos.')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,18 +118,14 @@ class _LoginFormState extends State<LoginForm> {
                     );
                   },
                   child: Text("Esqueceu a senha?"),
-
                 ),
               ),
               SizedBox(height: 10),
-              CustomRedButton(
+              isLoading
+                  ? CircularProgressIndicator()
+                  : CustomRedButton(
                 text: "Acessar financiamento",
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ContagemForm()),
-                  );
-                },
+                onPressed: autenticarUsuario,
               ),
             ],
           ),
