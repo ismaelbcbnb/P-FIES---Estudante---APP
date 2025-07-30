@@ -3,9 +3,9 @@
     "short_name": "pfies_estudante",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#a41c3c",
+    "theme_color": "#a41c3c",
+    "description": "P-Fies - Estudante",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
